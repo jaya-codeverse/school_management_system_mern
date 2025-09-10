@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(express.json({ limit: "10mb" }));
 
 const corsOptions = {
-  origin: "*",
+  origin: "https://school-management-system-mern-w5ol.onrender.com",
   credentials: true,
 };
 
