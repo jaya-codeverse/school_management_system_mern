@@ -7,14 +7,17 @@ const app = express();
 const Routes = require("./routes/route.js");
 const path = require("path");
 
+// environment variables
 dotenv.config();
 const PORT = process.env.PORT || 8000;
 const _dirname = path.resolve();
 
+// body parser configuration
 app.use(bodyParser.json({ limit: "10mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "10mb", extended: true }));
 app.use(express.json({ limit: "10mb" }));
 
+// cors configuration
 const corsOptions = {
   origin: "https://school-management-system-mern-w5ol.onrender.com",
   credentials: true,
@@ -22,6 +25,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+// mongodb connection
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
@@ -31,12 +35,14 @@ mongoose
     console.log("NOT CONNECTED TO NETWORK", err);
   });
 
+// routes
 app.use("/", Routes);
 app.use(express.static(path.join(_dirname, "frontend", "build")));
 app.get("*", (_, res) => {
   res.sendFile(path.resolve(_dirname, "frontend", "build", "index.html"));
 });
 
+// server listening
 app.listen(PORT, () => {
   console.log(`Server started at port no. ${PORT}`);
 });
